@@ -4,7 +4,10 @@ namespace EscolaLms\Bookmarks;
 
 use EscolaLms\Auth\EscolaLmsAuthServiceProvider;
 use EscolaLms\Bookmarks\Providers\AuthServiceProvider;
-use EscolaLms\Settings\EscolaLmsSettingsServiceProvider;
+use EscolaLms\Bookmarks\Repositories\BookmarkRepository;
+use EscolaLms\Bookmarks\Repositories\Contracts\BookmarkRepositoryContract;
+use EscolaLms\Bookmarks\Services\BookmarkService;
+use EscolaLms\Bookmarks\Services\Contracts\BookmarkServiceContract;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -15,9 +18,11 @@ class EscolaLmsBookmarksServiceProvider extends ServiceProvider
     const CONFIG_KEY = 'escolalms_bookmarks';
 
     public const REPOSITORIES = [
+        BookmarkRepositoryContract::class => BookmarkRepository::class
     ];
 
     public const SERVICES = [
+        BookmarkServiceContract::class => BookmarkService::class
     ];
 
     public $singletons = self::SERVICES + self::REPOSITORIES;
@@ -27,7 +32,6 @@ class EscolaLmsBookmarksServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/config.php', self::CONFIG_KEY);
 
         $this->app->register(AuthServiceProvider::class);
-        $this->app->register(EscolaLmsSettingsServiceProvider::class);
         $this->app->register(EscolaLmsAuthServiceProvider::class);
     }
 
