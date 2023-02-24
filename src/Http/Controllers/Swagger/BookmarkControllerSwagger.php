@@ -229,7 +229,7 @@ interface BookmarkControllerSwagger
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
-     *                  @OA\Items(ref="#/components/schemas/TaskResource")
+     *                  @OA\Items(ref="#/components/schemas/BookmarkResource")
      *              ),
      *              @OA\Property(
      *                  property="message",
