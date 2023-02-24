@@ -1,6 +1,6 @@
 {
-  "name": "escolalms/bookmarks",
-  "description": "Escola Headless LMS Bookmarks",
+  "name": "escolalms/bookmarks_notes",
+  "description": "Escola Headless LMS Bookmarks & Notes",
   "type": "package",
   "require": {
     "php": "^7.4|^8.0|^8.1",
