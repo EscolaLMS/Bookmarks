@@ -30,4 +30,9 @@ class TestCase extends CoreTestCase
         $app['config']->set('auth.providers.users.model', User::class);
         $app['config']->set('passport.client_uuids', true);
     }
+
+    protected function makeUser(array $data = [])
+    {
+        return config('auth.providers.users.model')::factory()->create($data);
+    }
 }
