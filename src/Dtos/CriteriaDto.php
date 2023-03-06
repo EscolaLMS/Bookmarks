@@ -9,7 +9,7 @@ use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class CriteriaDto  extends BaseCriteriaDto implements DtoContract, InstantiateFromRequest
+class CriteriaDto extends BaseCriteriaDto implements DtoContract, InstantiateFromRequest
 {
     public static function instantiateFromRequest(Request $request): self
     {
@@ -19,7 +19,7 @@ class CriteriaDto  extends BaseCriteriaDto implements DtoContract, InstantiateFr
             $criteria->push(new EqualCriterion('bookmarkable_type', $request->get('bookmarkable_type')));
             $criteria->push(new EqualCriterion('bookmarkable_id', $request->get('bookmarkable_id')));
         }
-        if ($request->get('bookmarkable_type') && !$request->get('bookmarkable_id')) {
+        if ($request->get('bookmarkable_type') && ! $request->get('bookmarkable_id')) {
             $criteria[] = new EqualCriterion('bookmarkable_type', $request->get('bookmarkable_type'));
         }
 

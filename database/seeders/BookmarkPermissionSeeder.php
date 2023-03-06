@@ -18,7 +18,7 @@ class BookmarkPermissionSeeder extends Seeder
             Permission::findOrCreate($value, 'api');
         }
 
-        $admin->givePermissionTo(BookmarkPermissionEnum::asArray());
-        $student->givePermissionTo(BookmarkPermissionEnum::asArray());
+        $admin->givePermissionTo(BookmarkPermissionEnum::adminPermissions());
+        $student->givePermissionTo(BookmarkPermissionEnum::studentPermissions());
     }
 }

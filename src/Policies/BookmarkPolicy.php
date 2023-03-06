@@ -30,4 +30,9 @@ class BookmarkPolicy
     {
         return $user->can(BookmarkPermissionEnum::LIST_BOOKMARK);
     }
+
+    public function listAll(User $user): bool
+    {
+        return $user->can(BookmarkPermissionEnum::LIST_ALL_BOOKMARK);
+    }
 }

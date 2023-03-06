@@ -19,6 +19,16 @@ class BookmarkRepository extends BaseRepository implements BookmarkRepositoryCon
         return Bookmark::class;
     }
 
+    public function findAll(?array $criteria = [], ?int $perPage = 15, ?string $orderDirection = 'desc', ?string $orderColumn = 'id'): LengthAwarePaginator
+    {
+        $query = $this->model->newQuery()->with(['user']);
+        $query = $this->applyCriteria($query, $criteria);
+
+        return $query
+            ->orderBy($orderColumn, $orderDirection)
+            ->paginate($perPage);
+    }
+
     public function findAllUser(int $userId, ?array $criteria = [], ?int $perPage = 15, ?string $orderDirection = 'desc', ?string $orderColumn = 'id'): LengthAwarePaginator
     {
         $query = $this->model->newQuery()->with(['user']);
