@@ -1,13 +1,20 @@
 <?php
 
+use EscolaLms\Bookmarks\Http\Controllers\AdminBookmarkController;
 use EscolaLms\Bookmarks\Http\Controllers\BookmarkController;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('api/admin/bookmarks')
+    ->middleware(['auth:api'])
+    ->group(function (): void {
+        Route::get(null, [AdminBookmarkController::class, 'findAll']);
+    });
+
 Route::prefix('api/bookmarks')
     ->middleware(['auth:api'])
-    ->group(function () {
+    ->group(function (): void {
         Route::post(null, [BookmarkController::class, 'create']);
         Route::patch('{id}', [BookmarkController::class, 'update']);
         Route::delete('{id}', [BookmarkController::class, 'delete']);
-        Route::get('', [BookmarkController::class, 'findAll']);
+        Route::get(null, [BookmarkController::class, 'findAll']);
     });

@@ -18,5 +18,7 @@ interface BookmarkServiceContract
 
     public function delete(int $id): void;
 
+    public function findAll(CriteriaDto $criteria, PageDto $page, OrderDto $order): LengthAwarePaginator;
+
     public function findAllUser(CriteriaDto $criteria, PageDto $page, OrderDto $order): LengthAwarePaginator;
 }

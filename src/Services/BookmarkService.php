@@ -36,6 +36,16 @@ class BookmarkService implements BookmarkServiceContract
         $this->bookmarkRepository->delete($id);
     }
 
+    public function findAll(CriteriaDto $criteria, PageDto $page, OrderDto $order): LengthAwarePaginator
+    {
+        return $this->bookmarkRepository->findAll(
+            $criteria->toArray(),
+            $page->getPerPage(),
+            $order->getOrderDirection(),
+            $order->getOrderBy()
+        );
+    }
+
     public function findAllUser(CriteriaDto $criteria, PageDto $page, OrderDto $order): LengthAwarePaginator
     {
         return $this->bookmarkRepository->findAllUser(
