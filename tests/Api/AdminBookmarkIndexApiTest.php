@@ -90,6 +90,36 @@ class AdminBookmarkIndexApiTest extends TestCase
         return [
             [
                 'filter' => [
+                    'has_value' => 0
+                ],
+                'data' => (function () {
+                    $items = collect();
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory()->state(['value' => null]));
+                    $items->push(Bookmark::factory()->state(['value' => null]));
+                    $items->push(Bookmark::factory()->state(['value' => null]));
+
+                    return $items;
+                }),
+                'filterCount' => 3
+            ],
+            [
+                'filter' => [
+                    'has_value' => 1
+                ],
+                'data' => (function () {
+                    $items = collect();
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory()->state(['value' => null]));
+
+                    return $items;
+                }),
+                'filterCount' => 2
+            ],
+            [
+                'filter' => [
                 ],
                 'data' => (function () {
                     $items = collect();
