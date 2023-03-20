@@ -17,7 +17,7 @@ class UpdateBookmarkRequest extends BookmarkRequest
     public function rules(): array
     {
         return [
-            'value' => ['required', 'string'],
+            'value' => ['nullable', 'string'],
             'bookmarkable_id' => ['required', 'integer'],
             'bookmarkable_type' => ['required', 'string'],
         ];

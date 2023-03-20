@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CreateBookmarkDto implements DtoContract, InstantiateFromRequest
 {
-    private string $value;
+    private ?string $value;
 
     private int $userId;
 
@@ -16,7 +16,7 @@ class CreateBookmarkDto implements DtoContract, InstantiateFromRequest
 
     private int $bookmarkableId;
 
-    public function __construct(string $value, string $bookmarkableType, int $bookmarkableId)
+    public function __construct(?string $value, string $bookmarkableType, int $bookmarkableId)
     {
         $this->value = $value;
         $this->userId = auth()->id();
@@ -24,7 +24,7 @@ class CreateBookmarkDto implements DtoContract, InstantiateFromRequest
         $this->bookmarkableId = $bookmarkableId;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }

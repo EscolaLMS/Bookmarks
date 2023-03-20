@@ -91,6 +91,23 @@ class BookmarkIndexApiTest extends TestCase
         return [
             [
                 'filter' => [
+                    'has_value' => true
+                ],
+                'data' => (function (int $userId) {
+                    $items = collect();
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory()->state(['value' => null, 'user_id' => $userId]));
+                    $items->push(Bookmark::factory()->state(['value' => null, 'user_id' => $userId]));
+                    $items->push(Bookmark::factory()->state(['value' => null, 'user_id' => $userId]));
+                    $items->push(Bookmark::factory()->state(['user_id' => $userId]));
+                    $items->push(Bookmark::factory()->state(['user_id' => $userId]));
+
+                    return $items;
+                }),
+                'filterCount' => 3
+            ],
+            [
+                'filter' => [
                 ],
                 'data' => (function (int $userId) {
                     $items = collect();

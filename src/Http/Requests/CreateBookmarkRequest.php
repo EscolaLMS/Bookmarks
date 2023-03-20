@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 /**
  * @OA\Schema(
  *      schema="BookmarkCreateRequest",
- *      required={"value", "bookmarkable_id", "bookmarkable_type"},
+ *      required={"bookmarkable_id", "bookmarkable_type"},
  *      @OA\Property(
  *          property="value",
  *          description="value",
@@ -39,7 +39,7 @@ class CreateBookmarkRequest extends BookmarkRequest
     public function rules(): array
     {
         return [
-            'value' => ['required', 'string'],
+            'value' => ['nullable', 'string'],
             'bookmarkable_id' => ['required', 'integer'],
             'bookmarkable_type' => ['required', 'string'],
         ];
