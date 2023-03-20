@@ -6,6 +6,8 @@ use EscolaLms\Core\Dtos\Contracts\DtoContract;
 use EscolaLms\Core\Dtos\Contracts\InstantiateFromRequest;
 use EscolaLms\Core\Dtos\CriteriaDto as BaseCriteriaDto;
 use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\IsNullCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\NotNullCriterion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -15,6 +17,14 @@ class CriteriaDto extends BaseCriteriaDto implements DtoContract, InstantiateFro
     {
         $criteria = new Collection();
 
+        if ($request->has('has_value')) {
+            $criteria->push(
+                $request->boolean('has_value')
+                    ? new NotNullCriterion('value')
+                    : new IsNullCriterion('value')
+            );
+
+        }
         if ($request->get('bookmarkable_type') && $request->get('bookmarkable_id')) {
             $criteria->push(new EqualCriterion('bookmarkable_type', $request->get('bookmarkable_type')));
             $criteria->push(new EqualCriterion('bookmarkable_id', $request->get('bookmarkable_id')));

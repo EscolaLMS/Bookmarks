@@ -17,10 +17,10 @@ use Illuminate\Support\Carbon;
  * @package EscolaLms\Bookmarks\Models
  *
  * @property int $id
- * @property string $value
+ * @property ?string $value
  * @property int $user_id
- * @property ?string $bookmarkable_type
- * @property ?int $bookmarkable_id
+ * @property string $bookmarkable_type
+ * @property int $bookmarkable_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *

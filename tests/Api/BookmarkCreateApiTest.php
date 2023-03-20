@@ -35,6 +35,24 @@ class BookmarkCreateApiTest extends TestCase
         ]);
     }
 
+    public function testCreateBookmarkNullableValue(): void
+    {
+        $user = $this->makeStudent();
+        $payload = $this->bookmarkPayload();
+        $payload['value'] = null;
+
+        $this->actingAs($user, 'api')
+            ->postJson('/api/bookmarks', $payload)
+            ->assertCreated();
+
+        $this->assertDatabaseHas($this->getTable(Bookmark::class), [
+            'value' => null,
+            'bookmarkable_id' => $payload['bookmarkable_id'],
+            'bookmarkable_type' => $payload['bookmarkable_type'],
+            'user_id' => $user->getKey(),
+        ]);
+    }
+
     public function testCreateBookmarkExceptUserId(): void
     {
         $user = $this->makeStudent();
@@ -82,8 +100,7 @@ class BookmarkCreateApiTest extends TestCase
     public function invalidDataProvider(): array
     {
         return [
-            ['field' => 'value', 'data' => ['value' => null]],
-            ['field' => 'bookmarkable_id', 'data' => ['bookmarkable_id' => "String"]],
+            ['field' => 'bookmarkable_id', 'data' => ['bookmarkable_id' => 'String']],
             ['field' => 'bookmarkable_id', 'data' => ['bookmarkable_id' => null]],
             ['field' => 'bookmarkable_type', 'data' => ['bookmarkable_type' => 123]],
             ['field' => 'bookmarkable_type', 'data' => ['bookmarkable_type' => null]],

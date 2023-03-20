@@ -197,6 +197,15 @@ interface BookmarkControllerSwagger
      *          ),
      *      ),
      *      @OA\Parameter(
+     *          name="has_value",
+     *          description="Has value",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="bool",
+     *          ),
+     *      ),
+     *      @OA\Parameter(
      *          name="bookmarkable_id",
      *          description="Bookmarkalbe ID",
      *          required=false,
