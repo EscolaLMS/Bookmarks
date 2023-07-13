@@ -1,10 +1,10 @@
 # Bookmarks and Notes
 [![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Bookmarks-Notes/)
-[![codecov](https://codecov.io/gh/EscolaLMS/Bookmarks-Notes/branch/main/graph/badge.svg?token=NRAN4R8AGZ)](https://codecov.io/gh/EscolaLMS/Bookmarks-Notes)
+[![codecov](https://codecov.io/gh/EscolaLMS/Bookmarks-Notes/branch/main/graph/badge.svg?token=NRAN4R8AGZ)](https://codecov.io/gh/EscolaLMS/Bookmarks)
 [![phpunit](https://github.com/EscolaLMS/Bookmarks-Notes/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Bookmarks-Notes/actions/workflows/test.yml)
-[![downloads](https://img.shields.io/packagist/dt/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/Bookmarks-Notes)
-[![downloads](https://img.shields.io/packagist/v/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/Bookmarks-Notes)
-[![downloads](https://img.shields.io/packagist/l/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/Bookmarks-Notes)
+[![downloads](https://img.shields.io/packagist/dt/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/bookmarks_notes)
+[![downloads](https://img.shields.io/packagist/v/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/bookmarks_notes)
+[![downloads](https://img.shields.io/packagist/l/escolalms/Bookmarks-Notes)](https://packagist.org/packages/escolalms/bookmarks_notes)
 
 ## What does it do
 This package is used to manage bookmarks and notes.
