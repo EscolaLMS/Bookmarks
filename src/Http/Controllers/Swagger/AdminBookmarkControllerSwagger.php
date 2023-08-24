@@ -72,6 +72,13 @@ interface AdminBookmarkControllerSwagger
      *          ),
      *      ),
      *      @OA\Parameter(
+     *          name="bookmarkable_ids[]",
+     *          description="An array of bookmark IDs.",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(type="array", @OA\Items(type="number")),
+     *      ),
+     *      @OA\Parameter(
      *          name="bookmarkable_type",
      *          description="Bookmarkalbe type",
      *          required=false,
