@@ -39,6 +39,7 @@ class AdminBookmarkIndexApiTest extends TestCase
                     'first_name',
                     'last_name',
                 ],
+                'bookmarkable',
                 'bookmarkable_id',
                 'bookmarkable_type',
             ]]]);
@@ -164,6 +165,24 @@ class AdminBookmarkIndexApiTest extends TestCase
                     return $items;
                 }),
                 'filterCount' => 1
+            ],
+            [
+                'filter' => [
+                    'bookmarkable_ids' => [123, 456],
+                    'bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Topic',
+                ],
+                'data' => (function () {
+                    $items = collect();
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory());
+                    $items->push(Bookmark::factory()->state(['bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Topic', 'bookmarkable_id' => 123]));
+                    $items->push(Bookmark::factory()->state(['bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Topic', 'bookmarkable_id' => 456]));
+                    $items->push(Bookmark::factory()->state(['bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Topic']));
+                    $items->push(Bookmark::factory()->state(['bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Course']));
+
+                    return $items;
+                }),
+                'filterCount' => 2
             ],
         ];
     }

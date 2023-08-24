@@ -40,10 +40,13 @@ class BookmarkResource extends JsonResource
 {
     public function toArray($request): array
     {
+        $resourceClass = ('\EscolaLms\Bookmarks\Http\Resources\\' . class_basename($this->bookmarkable_type) . 'Resource');
+
         return [
             'id' => $this->id,
             'value' => $this->value,
             'user' => UserResource::make($this->user),
+            'bookmarkable' => class_exists($resourceClass) && $this->bookmarkable ? $resourceClass::make($this->bookmarkable) : null,
             'bookmarkable_id' => $this->bookmarkable_id,
             'bookmarkable_type' => $this->bookmarkable_type,
         ];
