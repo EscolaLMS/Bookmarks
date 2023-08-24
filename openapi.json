@@ -78,6 +78,18 @@
                         }
                     },
                     {
+                        "name": "bookmarkable_ids[]",
+                        "in": "query",
+                        "description": "An array of bookmark IDs.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    {
                         "name": "bookmarkable_type",
                         "in": "query",
                         "description": "Bookmarkalbe type",
@@ -172,6 +184,18 @@
                         "required": false,
                         "schema": {
                             "type": "number"
+                        }
+                    },
+                    {
+                        "name": "bookmarkable_ids[]",
+                        "in": "query",
+                        "description": "An array of bookmark IDs.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
                         }
                     },
                     {
