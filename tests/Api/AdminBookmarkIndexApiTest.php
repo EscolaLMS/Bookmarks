@@ -171,7 +171,7 @@ class AdminBookmarkIndexApiTest extends TestCase
                     'bookmarkable_ids' => [123, 456],
                     'bookmarkable_type' => 'EscolaLms\\Courses\\Models\\Topic',
                 ],
-                'data' => (function (int $userId) {
+                'data' => (function () {
                     $items = collect();
                     $items->push(Bookmark::factory());
                     $items->push(Bookmark::factory());
