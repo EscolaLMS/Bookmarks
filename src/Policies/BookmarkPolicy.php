@@ -11,6 +11,26 @@ class BookmarkPolicy
 {
     use HandlesAuthorization;
 
+    public function createOwn(User $user): bool
+    {
+        return $user->can(BookmarkPermissionEnum::CREATE_BOOKMARK_OWN);
+    }
+
+    public function updateOwn(User $user, Bookmark $bookmark): bool
+    {
+        return $user->can(BookmarkPermissionEnum::UPDATE_BOOKMARK_OWN) && $this->isOwner($bookmark);
+    }
+
+    public function deleteOwn(User $user, Bookmark $bookmark): bool
+    {
+        return $user->can(BookmarkPermissionEnum::DELETE_BOOKMARK_OWN) && $this->isOwner($bookmark);
+    }
+
+    public function listOwn(User $user): bool
+    {
+        return $user->can(BookmarkPermissionEnum::LIST_BOOKMARK_OWN);
+    }
+
     public function create(User $user): bool
     {
         return $user->can(BookmarkPermissionEnum::CREATE_BOOKMARK);
@@ -31,8 +51,8 @@ class BookmarkPolicy
         return $user->can(BookmarkPermissionEnum::LIST_BOOKMARK);
     }
 
-    public function listAll(User $user): bool
+    private function isOwner(?Bookmark $bookmark = null): bool
     {
-        return $user->can(BookmarkPermissionEnum::LIST_ALL_BOOKMARK);
+        return $bookmark->user_id === auth()->id();
     }
 }

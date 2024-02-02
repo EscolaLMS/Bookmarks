@@ -15,7 +15,7 @@ trait BookmarkTesting
         return with(new Bookmark())->getTable();
     }
 
-    public function bookmarkPayload(?array $data = []): array
+    public function bookmarkPayload(?array $data = [], ?int $userId = null): array
     {
         $type = Str::ucfirst($this->faker->word) . $this->faker->numberBetween();
 
@@ -25,7 +25,7 @@ trait BookmarkTesting
             'bookmarkable_type' => 'EscolaLms\\' . $type . '\\Models\\' . $type,
         ];
 
-        return array_merge($payload, $data);
+        return array_merge($payload, $userId ? ['user_id' => $userId] : [], $data);
     }
 
     public function prepareUri(string $prefix, array $filters): string {

@@ -16,10 +16,10 @@ class CreateBookmarkDto implements DtoContract, InstantiateFromRequest
 
     private int $bookmarkableId;
 
-    public function __construct(?string $value, string $bookmarkableType, int $bookmarkableId)
+    public function __construct(?string $value, string $bookmarkableType, int $bookmarkableId, ?int $userId = null)
     {
         $this->value = $value;
-        $this->userId = auth()->id();
+        $this->userId = $userId ?? auth()->id();
         $this->bookmarkableType = $bookmarkableType;
         $this->bookmarkableId = $bookmarkableId;
     }
@@ -60,6 +60,7 @@ class CreateBookmarkDto implements DtoContract, InstantiateFromRequest
             $request->input('value'),
             $request->input('bookmarkable_type'),
             $request->input('bookmarkable_id'),
+            $request->input('user_id'),
         );
     }
 }

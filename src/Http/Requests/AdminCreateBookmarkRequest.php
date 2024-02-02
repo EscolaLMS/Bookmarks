@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 
 /**
  * @OA\Schema(
- *      schema="BookmarkCreateRequest",
+ *      schema="AdminBookmarkCreateRequest",
  *      required={"bookmarkable_id", "bookmarkable_type"},
  *      @OA\Property(
  *          property="value",
@@ -26,14 +26,19 @@ use Illuminate\Support\Facades\Gate;
  *          description="bookmarkable_type",
  *          type="string"
  *      ),
+ *      @OA\Property(
+ *           property="user_id",
+ *           description="user_id",
+ *           type="int"
+ *       ),
  * )
  *
  */
-class CreateBookmarkRequest extends BookmarkRequest
+class AdminCreateBookmarkRequest extends BookmarkRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('createOwn', Bookmark::class);
+        return Gate::allows('create', Bookmark::class);
     }
 
     public function rules(): array
@@ -42,15 +47,12 @@ class CreateBookmarkRequest extends BookmarkRequest
             'value' => ['nullable', 'string'],
             'bookmarkable_id' => ['required', 'integer'],
             'bookmarkable_type' => ['required', 'string'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
     public function toDto(): CreateBookmarkDto
     {
-        return new CreateBookmarkDto(
-            $this->input('value'),
-            $this->input('bookmarkable_type'),
-            $this->input('bookmarkable_id'),
-        );
+        return CreateBookmarkDto::instantiateFromRequest($this);
     }
 }

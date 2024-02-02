@@ -8,9 +8,9 @@ class UpdateBookmarkDto extends CreateBookmarkDto
 {
     private int $id;
 
-    public function __construct(int $id, ?string $value, string $bookmarkableType, int $bookmarkableId)
+    public function __construct(int $id, ?string $value, string $bookmarkableType, int $bookmarkableId, ?int $userId)
     {
-        parent::__construct($value, $bookmarkableType, $bookmarkableId);
+        parent::__construct($value, $bookmarkableType, $bookmarkableId, $userId);
 
         $this->id = $id;
     }
@@ -34,6 +34,7 @@ class UpdateBookmarkDto extends CreateBookmarkDto
             $request->input('value'),
             $request->input('bookmarkable_type'),
             $request->input('bookmarkable_id'),
+            $request->input('user_id'),
         );
     }
 }

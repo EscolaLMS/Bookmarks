@@ -11,14 +11,6 @@ abstract class BookmarkRequest extends FormRequest
     {
         return Bookmark::findOrFail($this->route('id'));
     }
-
-    public function isOwner(?Bookmark $bookmark = null): bool
-    {
-        $bookmark = $bookmark ?? $this->getBookmark();
-
-        return $bookmark->user_id === auth()->id();
-    }
-
     public function rules(): array
     {
         return [
