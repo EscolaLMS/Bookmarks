@@ -23,7 +23,7 @@ class AdminBookmarkUpdateApiTest extends TestCase
         $admin = $this->makeAdmin();
         $student = $this->makeStudent();
         $bookmark = Bookmark::factory()->create();
-        $payload = $this->bookmarkPayload([], $student->getKey());
+        $payload = $this->bookmarkPayload(['user_id' =>  $student->getKey()]);
 
         $this->actingAs($admin, 'api')
             ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);
@@ -42,7 +42,7 @@ class AdminBookmarkUpdateApiTest extends TestCase
         $admin = $this->makeAdmin();
         $student = $this->makeStudent();
         $bookmark = Bookmark::factory()->create();
-        $payload = $this->bookmarkPayload(['value' => null], $student->getKey());
+        $payload = $this->bookmarkPayload(['value' => null, 'user_id' => $student->getKey()]);
 
         $this->actingAs($admin, 'api')
             ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);
@@ -62,7 +62,7 @@ class AdminBookmarkUpdateApiTest extends TestCase
         $student1 = $this->makeStudent();
         $student2 = $this->makeStudent();
         $bookmark = Bookmark::factory()->create(['user_id' => $student1->getKey()]);
-        $payload = $this->bookmarkPayload([], $student2->getKey());
+        $payload = $this->bookmarkPayload(['user_id' => $student2->getKey()]);
 
         $this->actingAs($admin, 'api')
             ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);

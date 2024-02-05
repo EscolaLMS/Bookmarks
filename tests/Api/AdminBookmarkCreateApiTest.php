@@ -22,7 +22,7 @@ class AdminBookmarkCreateApiTest extends TestCase
     {
         $admin = $this->makeAdmin();
         $student = $this->makeStudent();
-        $payload = $this->bookmarkPayload([], $student->getKey());
+        $payload = $this->bookmarkPayload(['user_id' => $student->getKey()]);
 
         $this->actingAs($admin, 'api')
             ->postJson('/api/admin/bookmarks', $payload)
@@ -40,7 +40,7 @@ class AdminBookmarkCreateApiTest extends TestCase
     {
         $admin = $this->makeAdmin();
         $student = $this->makeStudent();
-        $payload = $this->bookmarkPayload(['value' => null], $student->getKey());
+        $payload = $this->bookmarkPayload(['value' => null, 'user_id' => $student->getKey()]);
 
         $this->actingAs($admin, 'api')
             ->postJson('/api/admin/bookmarks', $payload)

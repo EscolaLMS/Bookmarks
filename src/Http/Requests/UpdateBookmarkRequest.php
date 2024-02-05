@@ -23,6 +23,11 @@ class UpdateBookmarkRequest extends BookmarkRequest
 
     public function toDto(): UpdateBookmarkDto
     {
-        return UpdateBookmarkDto::instantiateFromRequest($this);
+        return new UpdateBookmarkDto(
+            $this->route('id'),
+            $this->input('value'),
+            $this->input('bookmarkable_type'),
+            $this->input('bookmarkable_id'),
+        );
     }
 }

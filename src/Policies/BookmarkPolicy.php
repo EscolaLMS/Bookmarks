@@ -51,7 +51,7 @@ class BookmarkPolicy
         return $user->can(BookmarkPermissionEnum::LIST_BOOKMARK);
     }
 
-    private function isOwner(?Bookmark $bookmark = null): bool
+    private function isOwner(Bookmark $bookmark): bool
     {
         return $bookmark->user_id === auth()->id();
     }

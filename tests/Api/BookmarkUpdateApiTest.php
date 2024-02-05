@@ -55,6 +55,24 @@ class BookmarkUpdateApiTest extends TestCase
         ]);
     }
 
+    public function testUpdateBookmarkExceptUser(): void
+    {
+        $user = $this->makeStudent();
+        $bookmark = Bookmark::factory()->create(['user_id' => $user->getKey()]);
+        $payload = $this->bookmarkPayload(['user_id' => 123]);
+
+        $this->actingAs($user, 'api')
+            ->patchJson('api/bookmarks/' . $bookmark->getKey(), $payload);
+
+        $this->assertDatabaseHas($this->getTable(Bookmark::class), [
+            'id' => $bookmark->getKey(),
+            'user_id' => $user->getKey(),
+            'value' => $payload['value'],
+            'bookmarkable_id' => $payload['bookmarkable_id'],
+            'bookmarkable_type' => $payload['bookmarkable_type'],
+        ]);
+    }
+
     /**
      * @dataProvider invalidDataProvider
      */
