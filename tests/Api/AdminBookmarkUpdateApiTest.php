@@ -8,7 +8,7 @@ use EscolaLms\Bookmarks\Tests\BookmarkTesting;
 use EscolaLms\Bookmarks\Tests\TestCase;
 use EscolaLms\Core\Tests\CreatesUsers;
 
-class BookmarkUpdateApiTest extends TestCase
+class AdminBookmarkUpdateApiTest extends TestCase
 {
     use BookmarkTesting, CreatesUsers;
 
@@ -20,56 +20,59 @@ class BookmarkUpdateApiTest extends TestCase
 
     public function testUpdateBookmark(): void
     {
-        $user = $this->makeStudent();
-        $bookmark = Bookmark::factory()->create(['user_id' => $user->getKey()]);
-        $payload = $this->bookmarkPayload();
+        $admin = $this->makeAdmin();
+        $student = $this->makeStudent();
+        $bookmark = Bookmark::factory()->create();
+        $payload = $this->bookmarkPayload(['user_id' =>  $student->getKey()]);
 
-        $this->actingAs($user, 'api')
-            ->patchJson('api/bookmarks/' . $bookmark->getKey(), $payload);
+        $this->actingAs($admin, 'api')
+            ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);
 
         $this->assertDatabaseHas($this->getTable(Bookmark::class), [
             'id' => $bookmark->getKey(),
-            'user_id' => $user->getKey(),
             'value' => $payload['value'],
             'bookmarkable_id' => $payload['bookmarkable_id'],
             'bookmarkable_type' => $payload['bookmarkable_type'],
+            'user_id' => $student->getKey(),
         ]);
     }
 
     public function testUpdateBookmarkNullableValue(): void
     {
-        $user = $this->makeStudent();
-        $bookmark = Bookmark::factory()->create(['user_id' => $user->getKey()]);
-        $payload = $this->bookmarkPayload();
-        $payload['value'] = null;
+        $admin = $this->makeAdmin();
+        $student = $this->makeStudent();
+        $bookmark = Bookmark::factory()->create();
+        $payload = $this->bookmarkPayload(['value' => null, 'user_id' => $student->getKey()]);
 
-        $this->actingAs($user, 'api')
-            ->patchJson('api/bookmarks/' . $bookmark->getKey(), $payload);
+        $this->actingAs($admin, 'api')
+            ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);
 
         $this->assertDatabaseHas($this->getTable(Bookmark::class), [
             'id' => $bookmark->getKey(),
-            'user_id' => $user->getKey(),
             'value' => null,
             'bookmarkable_id' => $payload['bookmarkable_id'],
             'bookmarkable_type' => $payload['bookmarkable_type'],
+            'user_id' => $student->getKey(),
         ]);
     }
 
-    public function testUpdateBookmarkExceptUser(): void
+    public function testUpdateBookmarkUpdateUser(): void
     {
-        $user = $this->makeStudent();
-        $bookmark = Bookmark::factory()->create(['user_id' => $user->getKey()]);
-        $payload = $this->bookmarkPayload(['user_id' => 123]);
+        $admin = $this->makeAdmin();
+        $student1 = $this->makeStudent();
+        $student2 = $this->makeStudent();
+        $bookmark = Bookmark::factory()->create(['user_id' => $student1->getKey()]);
+        $payload = $this->bookmarkPayload(['user_id' => $student2->getKey()]);
 
-        $this->actingAs($user, 'api')
-            ->patchJson('api/bookmarks/' . $bookmark->getKey(), $payload);
+        $this->actingAs($admin, 'api')
+            ->patchJson('api/admin/bookmarks/' . $bookmark->getKey(), $payload);
 
         $this->assertDatabaseHas($this->getTable(Bookmark::class), [
             'id' => $bookmark->getKey(),
-            'user_id' => $user->getKey(),
             'value' => $payload['value'],
             'bookmarkable_id' => $payload['bookmarkable_id'],
             'bookmarkable_type' => $payload['bookmarkable_type'],
+            'user_id' => $student2->getKey(),
         ]);
     }
 
@@ -78,39 +81,36 @@ class BookmarkUpdateApiTest extends TestCase
      */
     public function testUpdateBookmarkInvalidData(string $key, array $data): void
     {
-        $user = $this->makeStudent();
-        $bookmark = Bookmark::factory()->create(['user_id' => $user->getKey()]);
+        $admin = $this->makeAdmin();
+        $bookmark = Bookmark::factory()->create();
 
-        $this->actingAs($user, 'api')
-            ->patchJson('/api/bookmarks/' . $bookmark->getKey(), $this->bookmarkPayload($data))
+        $this->actingAs($admin, 'api')
+            ->patchJson('/api/admin/bookmarks/' . $bookmark->getKey(), $this->bookmarkPayload($data))
             ->assertUnprocessable()
             ->assertJsonValidationErrors([$key]);
     }
 
     public function testUpdateBookmarkNotFound(): void
     {
-        $this->actingAs($this->makeStudent(), 'api')
-            ->patchJson('api/bookmarks/123')
+        $this->actingAs($this->makeAdmin(), 'api')
+            ->patchJson('api/admin/bookmarks/123')
             ->assertNotFound();
-    }
-
-    public function testUpdateBookmarkNotOwner(): void
-    {
-        $this->actingAs($this->makeStudent(), 'api')
-            ->patchJson('api/bookmarks/' . Bookmark::factory()->create()->getKey())
-            ->assertForbidden();
     }
 
     public function testUpdateBookmarkForbidden(): void
     {
         $this->actingAs($this->makeUser(), 'api')
-            ->patchJson('api/bookmarks/' . Bookmark::factory()->create()->getKey())
+            ->patchJson('api/admin/bookmarks/' . Bookmark::factory()->create()->getKey())
+            ->assertForbidden();
+
+        $this->actingAs($this->makeStudent(), 'api')
+            ->patchJson('api/admin/bookmarks/' . Bookmark::factory()->create()->getKey())
             ->assertForbidden();
     }
 
     public function testUpdateBookmarkUnauthorized(): void
     {
-        $this->patchJson('api/bookmarks/' . Bookmark::factory()->create()->getKey())
+        $this->patchJson('api/admin/bookmarks/' . Bookmark::factory()->create()->getKey())
             ->assertUnauthorized();
     }
 
@@ -121,6 +121,9 @@ class BookmarkUpdateApiTest extends TestCase
             ['field' => 'bookmarkable_id', 'data' => ['bookmarkable_id' => null]],
             ['field' => 'bookmarkable_type', 'data' => ['bookmarkable_type' => 123]],
             ['field' => 'bookmarkable_type', 'data' => ['bookmarkable_type' => null]],
+            ['field' => 'user_id', 'data' => ['user_id' => null]],
+            ['field' => 'user_id', 'data' => ['user_id' => 'String']],
+            ['field' => 'user_id', 'data' => ['user_id' => 123]],
         ];
     }
 }

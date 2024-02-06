@@ -8,6 +8,9 @@ Route::prefix('api/admin/bookmarks')
     ->middleware(['auth:api'])
     ->group(function (): void {
         Route::get(null, [AdminBookmarkController::class, 'findAll']);
+        Route::post(null, [AdminBookmarkController::class, 'create']);
+        Route::patch('{id}', [AdminBookmarkController::class, 'update']);
+        Route::delete('{id}', [AdminBookmarkController::class, 'delete']);
     });
 
 Route::prefix('api/bookmarks')

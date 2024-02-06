@@ -4,11 +4,11 @@ namespace EscolaLms\Bookmarks\Http\Requests;
 
 use Illuminate\Support\Facades\Gate;
 
-class DeleteBookmarkRequest extends BookmarkRequest
+class AdminDeleteBookmarkRequest extends BookmarkRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('deleteOwn', $this->getBookmark());
+        return Gate::allows('delete', $this->getBookmark());
     }
 
     public function getId(): ?int

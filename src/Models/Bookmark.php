@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  *
  * @property User $user
+ * @property mixed $bookmarkable
  *
  */
 class Bookmark extends Model

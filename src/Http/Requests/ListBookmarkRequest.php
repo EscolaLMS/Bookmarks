@@ -13,7 +13,7 @@ class ListBookmarkRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('list', Bookmark::class);
+        return Gate::allows('listOwn', Bookmark::class);
     }
 
     public function rules(): array

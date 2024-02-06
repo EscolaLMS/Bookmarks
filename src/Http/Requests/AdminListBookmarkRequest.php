@@ -12,7 +12,7 @@ class AdminListBookmarkRequest extends BookmarkRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('list-all', Bookmark::class);
+        return Gate::allows('list', Bookmark::class);
     }
 
     public function getPage(): PageDto
