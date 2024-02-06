@@ -112,6 +112,143 @@
                         "passport": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Bookmarks"
+                ],
+                "summary": "Store a newly created bookmark",
+                "description": "Store Bookmark",
+                "operationId": "16ec28d92894aece17bd3cfb4a704199",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminBookmarkCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/BookmarkResource"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/bookmarks/{id}": {
+            "delete": {
+                "tags": [
+                    "Admin Bookmarks"
+                ],
+                "summary": "Remove the specified bookmark",
+                "description": "Delete Bookmarks",
+                "operationId": "1638f9c4e93832dc07ace946a00ee6a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of bookmark",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Bookmarks"
+                ],
+                "summary": "Update bookmark",
+                "description": "Store Bookmark",
+                "operationId": "fffe1b7324a28c7979e0258bede5c99d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of bookmark",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminBookmarkCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/BookmarkResource"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
             }
         },
         "/api/bookmarks": {
@@ -363,6 +500,31 @@
     },
     "components": {
         "schemas": {
+            "AdminBookmarkCreateRequest": {
+                "required": [
+                    "bookmarkable_id",
+                    "bookmarkable_type"
+                ],
+                "properties": {
+                    "value": {
+                        "description": "value",
+                        "type": "string"
+                    },
+                    "bookmarkable_id": {
+                        "description": "bookmarkable_id",
+                        "type": "integer"
+                    },
+                    "bookmarkable_type": {
+                        "description": "bookmarkable_type",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "description": "user_id",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "BookmarkCreateRequest": {
                 "required": [
                     "bookmarkable_id",
