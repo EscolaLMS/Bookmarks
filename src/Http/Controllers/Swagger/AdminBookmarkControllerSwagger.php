@@ -15,7 +15,7 @@ interface AdminBookmarkControllerSwagger
      * @OA\Post(
      *      path="/api/admin/bookmarks",
      *      summary="Store a newly created bookmark",
-     *      tags={"Bookmarks"},
+     *      tags={"Admin Bookmarks"},
      *      description="Store Bookmark",
      *      security={
      *          {"passport": {}},
@@ -57,7 +57,7 @@ interface AdminBookmarkControllerSwagger
      * @OA\Patch(
      *      path="/api/admin/bookmarks/{id}",
      *      summary="Update bookmark",
-     *      tags={"Bookmarks"},
+     *      tags={"Admin Bookmarks"},
      *      description="Store Bookmark",
      *      security={
      *          {"passport": {}},
@@ -108,7 +108,7 @@ interface AdminBookmarkControllerSwagger
      * @OA\Delete(
      *      path="/api/admin/bookmarks/{id}",
      *      summary="Remove the specified bookmark",
-     *      tags={"Bookmarks"},
+     *      tags={"Admin Bookmarks"},
      *      description="Delete Bookmarks",
      *      security={
      *          {"passport": {}},

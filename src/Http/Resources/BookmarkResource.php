@@ -46,7 +46,7 @@ class BookmarkResource extends JsonResource
             'id' => $this->id,
             'value' => $this->value,
             'user' => UserResource::make($this->user),
-            'bookmarkable' => class_exists($resourceClass) && $this->bookmarkable ? $resourceClass::make($this->bookmarkable) : null,
+            'bookmarkable' => class_exists($resourceClass) && class_exists($this->bookmarkable_type) && $this->bookmarkable ? $resourceClass::make($this->bookmarkable) : null,
             'bookmarkable_id' => $this->bookmarkable_id,
             'bookmarkable_type' => $this->bookmarkable_type,
         ];

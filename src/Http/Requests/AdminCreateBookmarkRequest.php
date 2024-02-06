@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Gate;
  *      @OA\Property(
  *           property="user_id",
  *           description="user_id",
- *           type="int"
+ *           type="integer"
  *       ),
  * )
  *
