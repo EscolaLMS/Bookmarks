@@ -45,6 +45,32 @@ class AdminBookmarkIndexApiTest extends TestCase
             ]]]);
     }
 
+    public function testIndexBookmarkFilterByUserId(): void
+    {
+        $user = $this->makeAdmin();
+        $student = $this->makeStudent();
+
+        Bookmark::factory()->count(5)->create();
+        Bookmark::factory()->count(3)->create(['user_id' => $student]);
+
+        $this->actingAs($user, 'api')
+            ->getJson($this->prepareUri('api/admin/bookmarks', ['user_id' => $student->getKey()]))
+            ->assertOk()
+            ->assertJsonCount(3, 'data')
+            ->assertJsonStructure(['data' => [[
+                'id',
+                'value',
+                'user' => [
+                    'id',
+                    'first_name',
+                    'last_name',
+                ],
+                'bookmarkable',
+                'bookmarkable_id',
+                'bookmarkable_type',
+            ]]]);
+    }
+
     public function testIndexBookmarkPagination(): void
     {
         $user = $this->makeAdmin();
