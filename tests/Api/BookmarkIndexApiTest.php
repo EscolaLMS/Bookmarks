@@ -48,6 +48,32 @@ class BookmarkIndexApiTest extends TestCase
             ]]]);
     }
 
+    public function testIndexBookmarkFiltersSkipUserIdFilter(): void
+    {
+        $user1 = $this->makeStudent();
+        $user2 = $this->makeStudent();
+
+        Bookmark::factory()->count(5)->create(['user_id' => $user1->getKey()]);
+        Bookmark::factory()->count(3)->create(['user_id' => $user2->getKey()]);
+
+        $this->actingAs($user1, 'api')
+            ->getJson($this->prepareUri('api/bookmarks', ['user_id' => $user2->getKey()]))
+            ->assertOk()
+            ->assertJsonCount(5, 'data')
+            ->assertJsonStructure(['data' => [[
+                'id',
+                'value',
+                'user' => [
+                    'id',
+                    'first_name',
+                    'last_name',
+                ],
+                'bookmarkable',
+                'bookmarkable_id',
+                'bookmarkable_type',
+            ]]]);
+    }
+
     public function testIndexBookmarkTopic(): void
     {
         $user = $this->makeStudent();

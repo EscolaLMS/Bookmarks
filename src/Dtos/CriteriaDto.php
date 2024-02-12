@@ -2,6 +2,7 @@
 
 namespace EscolaLms\Bookmarks\Dtos;
 
+use EscolaLms\Bookmarks\Enums\BookmarkPermissionEnum;
 use EscolaLms\Core\Dtos\Contracts\DtoContract;
 use EscolaLms\Core\Dtos\Contracts\InstantiateFromRequest;
 use EscolaLms\Core\Dtos\CriteriaDto as BaseCriteriaDto;
@@ -25,6 +26,9 @@ class CriteriaDto extends BaseCriteriaDto implements DtoContract, InstantiateFro
                     : new IsNullCriterion('value')
             );
 
+        }
+        if ($request->user()->can(BookmarkPermissionEnum::LIST_BOOKMARK) && !$request->user()->can(BookmarkPermissionEnum::LIST_BOOKMARK_OWN) && $request->get('user_id')) {
+            $criteria->push(new EqualCriterion('user_id', $request->get('user_id')));
         }
         if ($request->get('bookmarkable_type') && $request->get('bookmarkable_ids')) {
             $criteria->push(new EqualCriterion('bookmarkable_type', $request->get('bookmarkable_type')));
