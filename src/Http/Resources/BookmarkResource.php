@@ -31,9 +31,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *      ),
  * )
  *
- */
-
-/**
  * @mixin Bookmark
  */
 class BookmarkResource extends JsonResource
